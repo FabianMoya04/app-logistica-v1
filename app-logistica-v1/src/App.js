@@ -1,25 +1,33 @@
-import logo from './logo.svg';
+// App.js
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Sidebar from './Components/Sidebar';
+import Dashboard from './Components/Dashboard';
+import Productos from './Components/Productos';
+import Categorias from './Components/Categorias';
+import Almacen from './Components/Almacen';
+import Pedidos from './Components/Pedidos';
+import Miembros from './Components/Miembros';
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+
+            <div className="d-flex" id="wrapper">
+                <Sidebar />
+                <div id="page-content-wrapper">
+                    <Routes>
+                        <Route path="/dashboard" element={<Dashboard />} />
+                        <Route path="/productos" element={<Productos />} />
+                        <Route path="/categorias" element={<Categorias />} />
+                        <Route path="/almacen" element={<Almacen />} />
+                        <Route path="/pedidos" element={<Pedidos />} />
+                        <Route path="/miembros" element={<Miembros />} />
+                    </Routes>
+                </div>
+            </div>
+
+    );
 }
 
 export default App;
