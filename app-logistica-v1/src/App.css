@@ -112,3 +112,13 @@ html, body {
   margin-left: 250px; /* Ajusta el margen izquierdo según el ancho del sidebar */
   padding: 20px;
 }
+
+.custom-modal {
+  width: 80%;
+  max-width: 600px;
+  margin: auto;
+}
+
+.custom-overlay {
+  background-color: white;
+}

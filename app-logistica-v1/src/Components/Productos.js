@@ -67,13 +67,19 @@ const Productos = () => {
             </table>
 
             {/* Modal para el formulario de agregar producto */}
-            <Modal isOpen={modalIsOpen} onRequestClose={closeModal} contentLabel="Agregar Producto" className="modal-dialog">
+            <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                contentLabel="Agregar Producto"
+                className="custom-modal"
+                overlayClassName="custom-overlay"
+            >
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title">Agregar Producto</h5>
                         <button type="button" className="btn-close" onClick={closeModal}></button>
                     </div>
-                    <div className="modal-body">
+                    <div className="modal-body" style={{ maxHeight: '70vh', overflowY: 'auto' }}>
                         <form onSubmit={handleFormSubmit}>
                             <div className="mb-3">
                                 <label htmlFor="nombre" className="form-label">Nombre:</label>
