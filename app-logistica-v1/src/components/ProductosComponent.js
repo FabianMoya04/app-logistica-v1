@@ -4,7 +4,6 @@ import { getProductos, createProducto, deleteProducto } from '../api/apiProducto
 const ProductosComponent = () => {
     const [productos, setProductos] = useState([]);
     const [nuevoProducto, setNuevoProducto] = useState({
-        id_producto: '',
         nombre_producto: '',
         descripcion: '',
         cantidad: '',
@@ -30,7 +29,6 @@ const ProductosComponent = () => {
             const productoCreado = await createProducto(nuevoProducto);
             setProductos([...productos, productoCreado]);
             setNuevoProducto({
-                id_producto: '',
                 nombre_producto: '',
                 descripcion: '',
                 cantidad: '',
@@ -42,10 +40,10 @@ const ProductosComponent = () => {
         }
     };
 
-    const handleDeleteProducto = async (id_producto) => {
+    const handleDeleteProducto = async (_id) => {
         try {
             await deleteProducto(id_producto);
-            setProductos(productos.filter(producto => producto.id_producto !== id_producto));
+            setProductos(productos.filter(producto => producto._id !== _id));
         } catch (error) {
             console.error('Error deleting producto:', error);
         }
@@ -68,16 +66,6 @@ const ProductosComponent = () => {
                     e.preventDefault();
                     handleCreateProducto();
                 }}>
-                    <div>
-                        <label>ID Producto:</label>
-                        <input
-                            type="number"
-                            name="id_producto"
-                            value={nuevoProducto.id_producto}
-                            onChange={handleInputChange}
-                            required
-                        />
-                    </div>
                     <div>
                         <label>Nombre del Producto:</label>
                         <input
@@ -136,9 +124,9 @@ const ProductosComponent = () => {
                 <h2>Lista de Productos</h2>
                 <ul>
                     {productos.map(producto => (
-                        <li key={producto.id_producto}>
+                        <li key={producto._id}>
                             {producto.nombre_producto}
-                            <button onClick={() => handleDeleteProducto(producto.id_producto)}>Eliminar</button>
+                            <button onClick={() => handleDeleteProducto(producto._id)}>Eliminar</button>
                         </li>
                     ))}
                 </ul>

@@ -17,9 +17,9 @@ export const getProductos = async () => {
     }
 };
 
-export const getProductoById = async (id_producto) => {
+export const getProductoById = async (_id) => {
     try {
-        const response = await api.get(`/productos/${id_producto}`);
+        const response = await api.get(`/productos/${_id}`);
         return response.data;
     } catch (error) {
         console.error('Error fetching producto by id:', error);
@@ -37,9 +37,9 @@ export const createProducto = async (producto) => {
     }
 };
 
-export const deleteProducto = async (id_producto) => {
+export const deleteProducto = async (_id) => {
     try {
-        await api.delete(`/productos/${id_producto}`);
+        await api.delete(`/productos/${_id}`);
     } catch (error) {
         console.error('Error deleting producto by id:', error);
         throw error;
