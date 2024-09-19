@@ -2,6 +2,9 @@
   "name": "app-logistica-v1",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "PORT=8080 react-scripts start"
+  },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.6.0",
     "@testing-library/jest-dom": "^5.17.0",
