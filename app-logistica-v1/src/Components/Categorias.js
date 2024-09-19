@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 const Categorias = () => {
     // Estado para controlar si el modal está abierto o cerrado
@@ -10,6 +11,12 @@ const Categorias = () => {
         id: '',
         nombre: '',
     });
+
+    // Estado para la lista de categorías
+    const [categorias, setCategorias] = useState([]);
+
+    // Estado para el texto de búsqueda
+    const [searchText, setSearchText] = useState('');
 
     // Funciones para abrir y cerrar el modal
     const openModal = () => setModalIsOpen(true);
@@ -24,9 +31,14 @@ const Categorias = () => {
     // Manejar envío del formulario
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        // Aquí puedes implementar la lógica para agregar la nueva categoría
-        console.log(categoria);
+        setCategorias([...categorias, categoria]); // Agregar nueva categoría
+        setCategoria({ id: '', nombre: '' }); // Limpiar el formulario
         closeModal(); // Cerrar el modal después de añadir la categoría
+    };
+
+    // Manejar eliminación de categoría
+    const handleDelete = (id) => {
+        setCategorias(categorias.filter(cat => cat.id !== id));
     };
 
     return (
@@ -34,9 +46,20 @@ const Categorias = () => {
             <h1 className="mt-4">Categorías</h1>
             <div className="d-flex justify-content-between mb-4">
                 <h2>Listado de Categorías</h2>
-                <button className="btn btn-primary" onClick={openModal}>
+                <button className="btn btn-primary ms-3" onClick={openModal}>
                     Agregar nueva categoría
                 </button>
+            </div>
+
+            {/* Barra de búsqueda */}
+            <div className="mb-4">
+                <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Buscar categorías..."
+                    value={searchText}
+                    onChange={(e) => setSearchText(e.target.value)}
+                />
             </div>
 
             {/* Tabla de categorías */}
@@ -45,10 +68,26 @@ const Categorias = () => {
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>
+                    <th>Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
-                {/* Aquí irán los datos de las categorías */}
+                {categorias
+                    .filter(cat => cat.nombre.toLowerCase().includes(searchText.toLowerCase()))
+                    .map(cat => (
+                        <tr key={cat.id}>
+                            <td>{cat.id}</td>
+                            <td>{cat.nombre}</td>
+                            <td>
+                                <button className="btn btn-link text-info" onClick={() => console.log("Edit", cat)}>
+                                    <FaEdit />
+                                </button>
+                                <button className="btn btn-link text-danger" onClick={() => handleDelete(cat.id)}>
+                                    <FaTrash />
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
 
