@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
+import { FaEdit, FaTrash } from 'react-icons/fa'; // Puedes instalar react-icons si no lo tienes
 
 const Productos = () => {
     // Estado para controlar si el modal está abierto o cerrado
     const [modalIsOpen, setModalIsOpen] = useState(false);
-
-    // Estado para los campos del formulario
+    const [productos, setProductos] = useState([]); // Estado inicial para productos
     const [producto, setProducto] = useState({
         nombre: '',
         descripcion: '',
@@ -15,27 +15,30 @@ const Productos = () => {
         imagen: null,
     });
 
-    // Funciones para abrir y cerrar el modal
     const openModal = () => setModalIsOpen(true);
     const closeModal = () => setModalIsOpen(false);
 
-    // Manejar cambios en los inputs del formulario
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setProducto({ ...producto, [name]: value });
     };
 
-    // Manejar cambio en la imagen
     const handleImageChange = (e) => {
         setProducto({ ...producto, imagen: e.target.files[0] });
     };
 
-    // Manejar envío del formulario
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        // Aquí puedes implementar la lógica para agregar el nuevo producto
-        console.log(producto);
+        setProductos([...productos, { ...producto, id: productos.length + 1 }]); // Añade el nuevo producto a la lista
         closeModal(); // Cerrar el modal después de añadir el producto
+        setProducto({ // Resetear el formulario
+            nombre: '',
+            descripcion: '',
+            cantidad: '',
+            precio: '',
+            categoria: '',
+            imagen: null,
+        });
     };
 
     return (
@@ -48,7 +51,7 @@ const Productos = () => {
                 </button>
             </div>
 
-            {/* Aquí irá la tabla de productos */}
+            {/* Tabla de productos */}
             <table className="table">
                 <thead>
                 <tr>
@@ -59,10 +62,25 @@ const Productos = () => {
                     <th>Precio</th>
                     <th>Categoría</th>
                     <th>Imagen</th>
+                    <th>Acciones</th> {/* Columna de acciones */}
                 </tr>
                 </thead>
                 <tbody>
-                {/* Datos de productos aquí */}
+                {productos.map((prod) => (
+                    <tr key={prod.id}>
+                        <td>{prod.id}</td>
+                        <td>{prod.nombre}</td>
+                        <td>{prod.descripcion}</td>
+                        <td>{prod.cantidad}</td>
+                        <td>{prod.precio}</td>
+                        <td>{prod.categoria}</td>
+                        <td>{prod.imagen ? prod.imagen.name : 'Sin imagen'}</td>
+                        <td>
+                            <FaEdit className="text-warning me-2" onClick={() => {/* Lógica para editar */}} />
+                            <FaTrash className="text-danger" onClick={() => {/* Lógica para eliminar */}} />
+                        </td>
+                    </tr>
+                ))}
                 </tbody>
             </table>
 
